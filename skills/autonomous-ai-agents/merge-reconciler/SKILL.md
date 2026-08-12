@@ -1,7 +1,7 @@
 ---
 name: merge-reconciler
 description: "Neutral third-party resolution of agent merge conflicts."
-version: 1.0.0
+version: 1.1.0
 author: Hermes Agent
 license: MIT
 platforms: [linux, macos, windows]
@@ -9,6 +9,20 @@ metadata:
   hermes:
     tags: [Multi-Agent, Git, Merge-Conflict, Kanban, Arbitration]
     related_skills: [hermes-agent]
+    trigger_conditions:
+      - "resolve merge conflict between agents"
+      - "git merge conflict between branches"
+      - "reconcile divergent branches"
+      - "neutral merge arbiter"
+      - "conflict resolution needed"
+      - "two agents branched the same code"
+      - "parallel branch collision"
+      - "multi-agent merge"
+      - "merge conflict with another worker"
+      - "arbitrate merge"
+      - "third-party merge resolution"
+      - "rebase conflict between agents"
+      - "unmerged changes from parallel work"
 ---
 
 # Merge Reconciler
@@ -28,6 +42,15 @@ produces a merged result, like a merge-queue arbiter.
   neither original agent should self-adjudicate.
 - Do NOT use for conflicts within a single agent's own work, or for trivial
   lockfile/generated-file conflicts (regenerate those instead).
+
+## Not For
+
+- **Conflicts within a single agent's own work** — self-resolve with `git merge --continue` or `git rebase --continue`; no third party needed.
+- **Trivial lockfile or generated-file conflicts** (`package-lock.json`, `yarn.lock`, `go.sum`, `Gemfile.lock`) — regenerate the file instead of manually resolving it.
+- **Formatting-only conflicts** — run a formatter (Prettier, black, rustfmt) on both sides instead of a manual merge.
+- **Picking sides arbitrarily** when both intents are recoverable — always classify each hunk; never default to "keep ours."
+- **Drive-by refactoring** while resolving — touching only conflicted regions is the impartiality contract; opportunistic fixes violate it.
+- **Reconciling work that has not yet been reviewed** — resolve conflicts first, then request a review of the merged result.
 
 ## Prerequisites
 
